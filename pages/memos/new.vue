@@ -23,6 +23,8 @@ export default {
 .memo-new-container
   width: 40%
   position: relative
+  @media (max-width: 767px)
+    width: 95%
   ul
     padding: 0
   .memo-submit-controller
