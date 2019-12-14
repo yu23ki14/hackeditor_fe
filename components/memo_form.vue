@@ -76,7 +76,6 @@ export default {
     reset_form_data() {
       this.title = ""
       this.main = ""
-      this.reference = ""
       this.connection = ""
       this.attachment_file = ""
       this.file_name = ""
