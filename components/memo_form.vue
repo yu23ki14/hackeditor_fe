@@ -38,6 +38,7 @@ export default {
       title: "",
       main: "",
       reference: "",
+      reference_other_details: "",
       connection: "",
       attachment_file: null,
       file_name: "",
@@ -52,18 +53,21 @@ export default {
       this.file_name = file.name
     },
     async add_memo() {
-      const params = {title: this.title, main: this.main, reference: this.reference}
-      const response = await this.$axios.$post('/memos', params)
-        .catch(err => {
-          return this.notify_submit('fail')
-        });
-      return this.notify_submit('success')
+      if (this.main) {
+        const params = {title: this.title, main: this.main, reference: this.reference, reference_other_details: this.reference_other_details}
+        const response = await this.$axios.$post('/memos', params)
+          .catch(err => {
+            return this.notify_submit('fail')
+          });
+        return this.notify_submit('success')
+      }
     },
     notify_submit(status) {
       if (status == "success") {
         this.reset_form_data()
         this.submit_status = true
         this.submit_status_text = "メモが保存されました"
+        this.submit_status = false
       } else {
         this.submit_status = true
         this.submit_status_text = "予期せぬエラーが発生しました"

@@ -30,7 +30,7 @@ export default {
     },
     controller_double_click: function (event) {
       this.controller_flag = true
-      this.$router.push('./memos/new')
+      this.$router.push({path: '/memos/new'})
       setTimeout(this.falsing_controller_flag, 501)
     },
     open_memo_modal: function(event){

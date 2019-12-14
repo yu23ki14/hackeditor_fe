@@ -24,7 +24,10 @@ export default {
   */
   css: [
     '@/assets/stylesheets/reset.css',
-    '@/assets/stylesheets/layout.css'
+    '@/assets/stylesheets/layout.sass',
+    '@/assets/stylesheets/text.sass',
+    '@/assets/stylesheets/form.sass',
+    '@/assets/stylesheets/lib/font_icon.css'
   ],
   /*
   ** Plugins to load before mounting the App
@@ -45,7 +48,8 @@ export default {
   
   axios: {
     // proxyHeaders: false
-    baseURL: "http://127.0.0.1:8080/api/v1",
+    //baseURL: "http://127.0.0.1:8080/api/v1",
+    baseURL: "https://hackeditorapi.herokuapp.com/api/v1",
     retry: { retries: 3 }
   },
   /*

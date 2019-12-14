@@ -13,7 +13,8 @@
   "dependencies": {
     "@nuxtjs/axios": "^5.6.0",
     "nuxt": "^2.0.0",
-    "sass-loader": "^7.0.0"
+    "sass-loader": "^7.0.0",
+    "vue-ctk-date-time-picker": "^2.4.0"
   },
   "devDependencies": {
     "node-sass": "^4.12.0",

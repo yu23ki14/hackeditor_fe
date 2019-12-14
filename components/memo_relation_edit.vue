@@ -1,76 +1,44 @@
 <template lang=pug>
-  .memo-relation-modal(v-show="memo_relation_modal")
+  .memo-relation-modal(v-show="memo_relation_edit_modal")
     .modal-backdrop(@click="toggle_memo_relation_modal")
     .memo-relation-form-wrapper
       .memo-relation-form-container
-        .label-text
-          |紐づけるメモ
-        memo_search_form(@search_memo="search_memo")
-        .searched-memo-wrapper
-          ul.searched-memo-container
-            li.searched-memo-item(v-for="memo in searched_memos" @click="set_children_memo(memo.id)")
-              h4.memo-title(:class="{ selected: memo.id == child_memo_id }") {{memo.title}}
-              p.memo-main {{memo.main}}
-              p.memo-reference 参照：{{memo.reference}}
         .label-text
           |紐づけの意図
         form(@submit.prevent="add_memo_relation")
           textarea(v-model="semantic")
           .memo-submit-controller
             button.memo-submit-button(type="submit")
-              |追加
+              |変更
 
 </template>
 
 <script>
-import memo_search_form from '~/components/memo_search_form.vue'
 
 export default {
-  props:['memo_relation_modal'],
-  
-  components: {
-    memo_search_form
-  },
+  props:['memo_relation_edit_modal', 'editting_id', 'editting_semantic'],
   
   data() {
     return {
-      searched_memos: null,
-      parent_memo_id: this.$route.params.id,
-      child_memo_id: null,
-      semantic: ""
+      relation_id: this.editting_id,
+      semantic: this.editting_semantic
     }
   },
   
   methods: {
     toggle_memo_relation_modal() {
-      this.$parent.memo_relation_modal = false
+      this.$parent.memo_relation_edit_modal = false
     },
     
-    async search_memo(title, reference, date) {
-      const query = {title: title, reference: reference, date: date, exclude_ids: [this.parent_memo_id]}
-      const response = await this.$axios.$get("/memos", {params: query})
+    async delete_memo_relation() {
+      const params = {semantic: this.semantic}
+      const response = await this.$axios.$put("/memo_relations/" + this.relation_id, params)
         .catch( error => {
           console.log("response error", error)
           return false
         })
       console.log(response)
-      this.searched_memos = response
-      return 
-    },
-    
-    set_children_memo(id) {
-      this.child_memo_id = id
-    },
-    
-    async add_memo_relation() {
-      const params = {memo_id: this.parent_memo_id, sub_memo_id: this.child_memo_id, semantic: this.semantic}
-      if (params.sub_memo_id != null) {
-        const response = await this.$axios.$post('/memo_relations', params)
-          .catch(err => {
-            return false
-          });
-        console.log(response)
-      }
+      return
     }
   }
 }
@@ -89,7 +57,7 @@ export default {
   left: 0
 
 .memo-relation-form-wrapper
-  width: 80%
+  width: 30%
   max-width: 865px
   height: 70vh
   position: absolute
